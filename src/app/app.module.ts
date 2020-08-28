@@ -15,7 +15,8 @@ import { ContactComponent } from './contact/contact.component';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule} from "@angular/fire/auth"
 import { environment } from '../environments/environment';
-
+import { ChatComponent } from './chat/chat.component';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
 
 const routes: Routes = [
   {path: '', component: MainComponent, data: {
@@ -29,6 +30,7 @@ const routes: Routes = [
   }},
   {path: "about", component: AboutComponent},
   {path: "contact", component: ContactComponent},
+  {path: "chat", component: ChatComponent},
 ]
 
 @NgModule({
@@ -39,7 +41,8 @@ const routes: Routes = [
     FilterPipe,
     AboutComponent,
     UsersComponent,
-    ContactComponent
+    ContactComponent,
+    ChatComponent
   ],
   imports: [
     BrowserModule,
@@ -50,7 +53,8 @@ const routes: Routes = [
     ReactiveFormsModule,
     AngularFireModule,
     AngularFireAuthModule,
-    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireModule.initializeApp(environment.firebase), 
+    AngularFirestoreModule, 
   ],
   providers: [],
   bootstrap: [AppComponent]

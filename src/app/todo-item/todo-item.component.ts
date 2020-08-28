@@ -17,6 +17,8 @@ export class TodoItemComponent implements OnInit {
 
   @Output() remove = new EventEmitter()
 
+  @Output() update = new EventEmitter()
+
   remTodo(todo){
     // 把想要丟出去的東西放進來
     // 外面會收到 idx

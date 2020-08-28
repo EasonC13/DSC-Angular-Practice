@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { map } from 'rxjs/operators';
 
 interface ToDo {
   id: number;
@@ -14,7 +16,28 @@ interface ToDo {
 export class HandleTodoService {
 
   todoList = []
-  constructor(){
+
+
+  chatsCollection: AngularFirestoreCollection<any>;
+  chats;
+  message;
+  removeMessage;
+
+  chatSnap;
+
+  constructor(private fireSotreService: AngularFirestore){
+
+
+    this.chatsCollection = this.fireSotreService.collection("chat", ref => ref.orderBy("createdBy"))
+    //this.chats = this.chatsCollection.valueChanges();
+    this.chats = this.chatsCollection.snapshotChanges().pipe(
+      map((actions:any) => actions.map(a => {
+        const data = a.payload.doc.data();
+        const id = a.payload.doc.id;
+        // 把 data 解構，變成在 ID 裡面
+        return { id, ...data };
+      })))
+
     try{
       this.todoList = JSON.parse(localStorage.getItem("todoList")).todoList;
     }catch(e) {

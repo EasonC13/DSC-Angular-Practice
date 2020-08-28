@@ -1,6 +1,6 @@
 <div class="view">
     <input class="toggle" type="checkbox" [checked]="todo.isCompleted" (change)="this.service.toggle(todo)">
-    <label>{{todo.item}}</label>
+    <label><input [(ngModel)]="todo.item"></label>
     <button class="destroy" (click)="this.service.removeTodo(todo)"></button>
   </div>
   <input class="edit" value="Rule the web">
