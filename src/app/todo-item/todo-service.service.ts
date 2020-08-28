@@ -28,8 +28,8 @@ export class HandleTodoService {
   constructor(private fireSotreService: AngularFirestore){
 
 
-    this.chatsCollection = this.fireSotreService.collection("chat", ref => ref.orderBy("createdBy"))
-    //this.chats = this.chatsCollection.valueChanges();
+    this.chatsCollection = this.fireSotreService.collection("to-do", ref => ref.orderBy("createdTime"))
+    this.chats = this.chatsCollection.valueChanges();
     this.chats = this.chatsCollection.snapshotChanges().pipe(
       map((actions:any) => actions.map(a => {
         const data = a.payload.doc.data();
@@ -37,6 +37,12 @@ export class HandleTodoService {
         // 把 data 解構，變成在 ID 裡面
         return { id, ...data };
       })))
+      .subscribe({
+        next: data => {console.log("印出來了，但我要睡了", data)}
+      })
+    console.log("CHAT", this.chats)
+    
+    
 
     try{
       this.todoList = JSON.parse(localStorage.getItem("todoList")).todoList;
